@@ -4,8 +4,8 @@ subtitle: Knowledge Engineering Lab
 author: Sanmitra Dharmavarapu
 githuburl: https://github.com/sanmitraD/Knowledge-Engineering-Lab-Andhra-University
 output:
-  html_notebook: default
   word_document: default
+  html_notebook: default
 ---
 
 github url: [https://github.com/sanmitraD/Knowledge-Engineering-Lab-coursework](https://github.com/sanmitraD/Knowledge-Engineering-Lab-coursework)
@@ -300,4 +300,138 @@ costs = data.frame(
   QuantityAvailableinKGs = c(10,5,50))
 print(costs)
 ```
+
+# 6. R program using **apply** group of functions to create and apply normalization function on each of te numerical columns of iris dataset to tranform them into a value around 0 with z-score normalization.
+
+we can achive z-score normalization in R by using function *scale(X,center=TRUE, scale=TRUE)* where X refers to data.
+
+So we need to apply it to all the columns in iris dataset which has numeric data.
+to do that we use apply() function
+
+```{r}
+str(iris)
+
+#We are using apply function to implement scale() function on every column. 
+#Here 2 means column 
+#It indicates apply function to apply scale() function column wise.
+apply(iris[1:4], 2, scale)
+
+```
+
+As you can see that whole data is centered aroung 0
+
+# 7.Apply Linear regression to
+## a)predict evaporation coefficient in terms of air velociy using the given data
+
+given data
+
+
+attributes | values
+-------------------- | ----- |----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----
+Velocity (cm/s)      |  20   |   60 |   100 |   140 |   180 |   220 |   260 |   300 |   340 |  380
+Evaporation (mm2/s)  | 0.18  |0.37  | 0.35  | 0.78  | 0.56  | 0.75  | 1.18  | 1.36  | 1.17  | 1.65
+
+
+```{r}
+x = c(20,60,100,140,180,220,260,300,340,380)
+y = c(0.18,0.37, 0.35, 0.78, 0.56, 0.75, 1.18, 1.36, 1.17, 1.65)
+#lm is a function to create a LINEAR MODEL
+linearModel = lm(y~x)
+print(linearModel)
+#now we create a new dataframe that set the x value
+pdata = data.frame(x=400)
+
+#we now apply predict() function and set the predictor variable in the pdata argument. 
+
+result = predict(linearModel,pdata)
+print(result)
+
+#we can also set the interval type as "predict" with out changing the default 0.95 confidence level
+
+result = predict(linearModel,pdata,interval = "predict")
+print(result)
+
+
+```
+lwr and upr refers to the lower and upper bound of result.
+
+## b)Analyze the significance of residual standard error value, R-squared value, F-statistic. Find the correlation coefficient for this data and analyze the significance of the correlation value.
+
+```{r}
+m1 = lm(dist ~ speed, data=cars)
+summary(m1)
+
+summary.aov(m1) # To get the sums of squares and mean squares
+#calculate sums of squares total, residual and model
+
+y = cars$dist
+ybar = mean(y)
+#ss is sum of squares
+ss.total = sum((y-ybar)^2)
+print(ss.total)
+ss.residual= sum((y-m1$fitted)^2)
+print(ss.residual)
+ss.model = ss.total-ss.residual
+print(ss.model)
+
+#calculate degrees of freedom total, residual and model
+
+n = length(cars$speed)
+k = length(m1$coef)
+
+df.total = n-1
+df.residual = n-k
+df.model = k-1
+
+# calcuating mean squres
+ms.residual = ss.residual/df.residual
+print(ms.residual)
+ms.model = ss.model/df.model
+print(ms.model)
+
+```
+
+### c)Perform a log transformation on the "Air Velocity" column, perform linear regression again and analyze all the relevant values.
+
+```{r}
+#air velocity
+x = c(20,60,100,140,180,220,260,300,340,380)
+#evaporation coefficient
+y = c(0.18,0.37, 0.35, 0.78, 0.56, 0.75, 1.18, 1.36, 1.17, 1.65)
+x = log(x)
+
+linearModel = lm(y~x)
+print(linearModel)
+#now we create a new dataframe that set the x value
+pdata = data.frame(x=400)
+
+#we now apply predict() function and set the predictor variable in the pdata argument. 
+
+result = predict(linearModel,pdata)
+print(result)
+
+#we can also set the interval type as "predict" with out changing the default 0.95 confidence level
+
+result = predict(linearModel,pdata,interval = "predict")
+print(result)
+```
+
+# 8. R program using apply group of functions to create and apply normalization function on each of te numeric variables/columns of iris dataset to tranform them into a value around 0 with z-score normalization.
+
+we can achive z-score normalization in R by using function *scale(X,center=TRUE, scale=TRUE)* where X refers to data.
+
+So we need to apply it to all the columns in iris dataset which has numeric data.
+to do that we use apply() function
+
+```{r}
+
+#We are using apply function to implement scale() function on every column. 
+#Here 2 means column 
+#It indicates apply function to apply scale() function column wise.
+apply(iris[1:4], 2, scale)
+
+```
+
+As you can see that whole data is centered aroung 0.
+
 
