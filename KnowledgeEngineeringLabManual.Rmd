@@ -1,0 +1,140 @@
+---
+title: "R Programming Lab Notebook"
+subtitle: Knowledge Engineering Lab
+author: Sanmitra Dharmavarapu
+output:
+  html_notebook: default
+  word_document: default
+---
+
+
+# 1. Exploratory data analysis using R
+Load the iris dataset and display the names and type of each column. 
+Find statistics such as min, max, range, mean, median, variance and standard deviation for each column of data.
+
+**Iris Data Set**
+Iris dataset os the best known dataset to be found in pattern recognition literature. The dataset contains 3 classes of 50 instances each, where each class refers to a type of iris plant.
+
+*Attribute Information*
+1. sepal length in cm
+
+2. sepal width in cm
+3. petal length in cm
+4. petal width in cm
+5. class
+    + Iris Setosa
+    + Iris Versicolour
+    + Iris Virginica
+    
+
+```{r}
+
+# the Iris dataset is an inbulit dataset avalable in RStudio and we can use it using iris identifier 
+print(iris)
+
+```
+
+To display the names and types of each column
+
+```{r}
+# to display names of each column we use the names functon
+
+print(names(iris))
+```
+
+For diplaying the names along with their types we use the lapply function using class as second argument
+
+```{r}
+print(lapply(iris,class))
+```
+
+*Finding the mean of individual columns*
+
+```{r}
+# we can find mean of a column using mean function
+
+# we can refer to individual columns in a datset using $ symbol as showin below
+
+print(mean(iris$Sepal.Length))
+print(mean(iris$Sepal.Width))
+print(mean(iris$Petal.Length))
+print(mean(iris$Petal.Width))
+
+```
+
+*Finding the median of each column*
+```{r}
+# we can find median of a column using median function
+
+
+print(median(iris$Sepal.Length))
+print(median(iris$Sepal.Width))
+print(median(iris$Petal.Length))
+print(median(iris$Petal.Width))
+```
+
+*Finding maximum value of each column*
+```{r}
+# we can find maximum of a column using max function
+
+
+print(max(iris$Sepal.Length))
+print(max(iris$Sepal.Width))
+print(max(iris$Petal.Length))
+print(max(iris$Petal.Width))
+
+```
+
+*Finding minimum value of each column*
+returns a vector containing the minimum and maximum of all the given arguments.
+```{r}
+# we can find maximum of a column using min function
+
+
+print(min(iris$Sepal.Length))
+print(min(iris$Sepal.Width))
+print(min(iris$Petal.Length))
+print(min(iris$Petal.Width))
+
+```
+
+*Finding the range of each column*
+We use range() to finding the range of each column. It returns a vector containing the minimum and maximum of all the given arguments.
+
+```{r}
+
+print(range(iris$Sepal.Length))
+print(range(iris$Sepal.Width))
+print(range(iris$Petal.Length))
+print(range(iris$Petal.Width))
+
+```
+
+*Finding variance of each column*
+we use var() function to find the variance of each column
+```{r}
+
+print(var(iris$Sepal.Length))
+print(var(iris$Sepal.Width))
+print(var(iris$Petal.Length))
+print(var(iris$Petal.Width))
+
+```
+
+*Finding standard deviation of each column*
+We use sd() function to find the variance of each column
+```{r}
+
+print(sd(iris$Sepal.Length))
+print(sd(iris$Sepal.Width))
+print(sd(iris$Petal.Length))
+print(sd(iris$Petal.Width))
+
+```
+
+**using summary function**
+we can use summary() function to get all the above details in a single go.
+```{r}
+summary(iris)
+```
+
