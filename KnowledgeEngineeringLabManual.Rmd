@@ -4,8 +4,8 @@ subtitle: Knowledge Engineering Lab
 author: Sanmitra Dharmavarapu
 githuburl: https://github.com/sanmitraD/Knowledge-Engineering-Lab-Andhra-University
 output:
-  word_document: default
   html_notebook: default
+  word_document: default
 ---
 
 github url: [https://github.com/sanmitraD/Knowledge-Engineering-Lab-coursework](https://github.com/sanmitraD/Knowledge-Engineering-Lab-coursework)
@@ -165,7 +165,139 @@ hist(x,breaks = 10, xlab = "Data",col = "lightblue", )
 hist(normalized, breaks = 10, xlab = "Normalized data", col = "yellow")
 ```
 
-#3.Generate histograms for any one variable and generate scatter plots for every pair of variables showing each species in different colour on iris dataset.
+# 3.Generate histograms for any one variable and generate scatter plots for every pair of variables showing each species in different colour on iris dataset.
+
+Generating histogram for any one variable
+let it be sepal length
+
+```{r}
+hist(iris$Sepal.Length, col="yellow", xlab = "Speal length in cm", main = "Histogram of Sepal lengths")
+```
+
 
 Let us use red, green, blue as the colours for 3 species 
+
+```{r}
+
+my_cols=c("red","green","blue")
+#21 is for circle, 22 is for squares 24 is for triangles
+pairs(iris[1:4],pch=c(21,22,24)[iris$Species],bg=my_cols[iris$Species])
+
+#correlation panel
+panel.cor = function(x,y){
+  usr<- par("usr");on.exit(par(usr))
+  par(usr = c(0,1,0,1))
+  r = round(cor(x,y), digits = 2)
+  txt = paste0("R = ",r)
+  cex.cor = 0.8/strwidth(txt)
+  text(0.5,0.5,txt,cex=cex.cor*r)
+}
+
+#customizing panels and printing correlations
+#customize upper panel
+upper.panel = function(x,y){
+  points(x,y,pch=19,col=my_cols[iris$Species])
+}
+
+#create the plots
+pairs(iris[1:4],lower.panel = panel.cor, upper.panel = upper.panel)
+
+#customize upper panel
+upper.panel = function(x,y){
+  points(x,y,pch=19,col = my_cols[iris$Species])
+  r = round(cor(x,y),digits=2)
+  txt = paste0("R = ",r)
+  usr = par("usr");on.exit(par(usr))
+  par(usr = c(0,1,0,1))
+  text(0.5,0.9,txt)
+}
+
+pairs(iris[1:4],lower.panel = NULL,upper.panel = upper.panel)
+
+
+```
+
+# 4. Generate box plots for each of the numerical attribute. Identify the attribute with highest variance.
+
+We will be using buliting dataset "airquality" dataset for this program.
+It is a Daily air quality measurements in New York, May to September 1973.
+
+Finding variance is simple. The spread of the boxplot indicates the variance. The more the spread of boxplot then it have more variance.
+
+```{r}
+#str(airquality)
+#Here we dont need the Day and Month values
+#removing rows with null values
+#boxplot does not consider the null values (NAs) so no need to remove them
+airq = airquality[1:4]
+str(airq)
+```
+
+```{r}
+boxplot(airq,notch = TRUE,horizontal = TRUE,col=(c("lightyellow","orange","gray","red")))
+```
+
+As we can see Solar.R which refers to Solar Radiation has more area of spread. Hence it has greater variance compared to other attributes
+
+# 5.Study of homogeneous and heterogeneous data structures such as vector, matrix, array, list and dataframe in R.
+
+**Vector**
+
+Vector is a basic data structure in R that contains the element of similar type.The data types of components of vector can be logical, integer, double, character, complex or raw. 
+
+```{r}
+#Creating a vector
+studentname = c("Sanmitra", "Dharmavarapu")
+print(studentname)
+
+#Getting the class of the vector
+print(class(studentname))
+
+```
+
+**Lists**
+A list is an R object that can contain many different type of components in it. The components can vectors, fuctions and even another list and many more.
+
+```{r}
+#Creating a list.
+list = list(c("Sanmitra","Dharmavarapu"),"CSE",316129510013,sin)
+print(list)
+```
+
+**Matrices**
+
+A matrix is a two dimensional reactangular data structure that contain list of homogeneous data in tabular format.It is possible to perform arithmetic operations on whole or a part of a matrix. A matrix can created using a vector input to the matrix() function
+
+```{r}
+M = matrix(c(1,2,3,4,5,6,7,8,9,10),nrow = 2,ncol = 5,byrow = TRUE)
+print(M)
+```
+
+**Array**
+While matrices are confined to two dimensions, arrays can be of any number of dimensions.It can store data in more than one dimensions. 
+
+For example if we create an array of dimension(10,20,30) then it creates 30 matrices each with 10 rows and 20 columns.
+These can store elements of only type.
+
+```{r}
+v1 = c(1,2,3)
+v2 = c(4,5,6,7,8,9)
+
+arr = array(c(v1,v2),dim=c(3,3,2))
+print(arr)
+```
+
+**Data Frames**
+
+Data frame is a tabular data object or two dimensional array like structure in which each column, contains values of one variable and each row contains one set of values from each column.
+
+Unlike matrices, each column of a data frame can contain different modes of data.
+
+```{r}
+costs = data.frame(
+  name = c("carrot","apple","sugar"),
+  costPerKG = c(50.00,60.00,39.50),
+  QuantityAvailableinKGs = c(10,5,50))
+print(costs)
+```
 
