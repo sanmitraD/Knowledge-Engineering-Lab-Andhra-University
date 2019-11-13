@@ -2,11 +2,13 @@
 title: "R Programming Lab Notebook"
 subtitle: Knowledge Engineering Lab
 author: Sanmitra Dharmavarapu
+githuburl: https://github.com/sanmitraD/Knowledge-Engineering-Lab-Andhra-University
 output:
-  html_notebook: default
   word_document: default
+  html_notebook: default
 ---
 
+github url: [https://github.com/sanmitraD/Knowledge-Engineering-Lab-coursework](https://github.com/sanmitraD/Knowledge-Engineering-Lab-coursework)
 
 # 1. Exploratory data analysis using R
 Load the iris dataset and display the names and type of each column. 
@@ -137,4 +139,33 @@ we can use summary() function to get all the above details in a single go.
 ```{r}
 summary(iris)
 ```
+
+# 2. R program to normalize the variables into 0 to 1 scale using min-max normalization
+
+the formula to achieve min max normalization is 
+y = (x-min)/(max-min)
+
+$$y=\frac{x-min}{max-min}$$
+
+
+```{r}
+#dummy data
+x = sample(-100:100,50)
+print("original data")
+print(x)
+maximum = max(x)
+minimum = min(x)
+normalized = (x-minimum)/(maximum-minimum)
+print("Normalized data")
+print(normalized)
+#using par function to fix multiple graphs in same plot
+
+par(mfrow=c(1,2))
+hist(x,breaks = 10, xlab = "Data",col = "lightblue", )
+hist(normalized, breaks = 10, xlab = "Normalized data", col = "yellow")
+```
+
+#3.Generate histograms for any one variable and generate scatter plots for every pair of variables showing each species in different colour on iris dataset.
+
+Let us use red, green, blue as the colours for 3 species 
 
